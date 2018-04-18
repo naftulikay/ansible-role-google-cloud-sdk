@@ -1,0 +1,23 @@
+---
+dist: trusty
+sudo: required
+
+matrix:
+  fast_finish: true
+
+services:
+  - docker
+
+env:
+  matrix: # each entry is its own run
+    - IMAGE: centos7
+    - IMAGE: loki
+    - IMAGE: xenial
+
+script: make clean test
+
+notifications:
+  email:
+    on_success: never
+    on_failure: never
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

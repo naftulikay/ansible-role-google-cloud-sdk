@@ -1,0 +1,7 @@
+---
+- name: configure vagrant
+  hosts: all
+  become: true
+  roles:
+    - role: vagrant-docker
+

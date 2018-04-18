@@ -1,0 +1,25 @@
+---
+- name: install google cloud apt repository key
+  apt_key:
+    id: 54A647F9048D5688D7DA2ABE6A030B21BA07F4FB
+    keyring: /etc/apt/trusted.gpg.d/google-cloud.gpg
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+  when: is_ubuntu_derivative
+  become: true
+
+- name: install google cloud apt repository
+  apt_repository:
+    repo: deb http://packages.cloud.google.com/apt cloud-sdk-{{ ubuntu_release }} main
+    filename: google-cloud
+    update_cache: true
+  when: is_ubuntu_derivative
+  register: ubuntu_repository
+  become: true
+
+- name: refresh apt cache
+  apt: update_cache=yes cache_valid_time=3600
+  when: is_ubuntu_derivative or (ubuntu_repository is changed)
+  become: true
+
+

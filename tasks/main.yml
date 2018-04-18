@@ -1,0 +1,13 @@
+---
+- name: include ubuntu tasks
+  include_tasks: ubuntu.yml
+  when: is_ubuntu_derivative
+
+- name: include redhat tasks
+  include_tasks: redhat.yml
+  when: is_redhat_derivative
+
+- name: install google cloud sdk
+  package: name=google-cloud-sdk state=present
+  become: true
+
